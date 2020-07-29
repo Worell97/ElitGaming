@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoCardGroupContainer, VideoCardList, Title, ExtraLink } from './styles';
+import { VideoCardGroupContainer, Title, ExtraLink } from './styles';
 import VideoCard from './components/VideoCard';
 import Slider, { SliderItem } from './components/Slider';
 
@@ -30,6 +30,8 @@ function Carousel({
           if (ignoreFirstVideo && index === 0) {
             return null;
           }
+          // if (index === videos.lenght) {
+          console.log(index)
 
           return (
             <SliderItem key={video.titulo}>
