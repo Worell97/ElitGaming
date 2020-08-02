@@ -6,12 +6,12 @@ import Carousel from '../../components/Carousel';
 
 function Home() {
   return (
-    <div style={{ backgroundColor: "#141414" }}>
+    <div style={{ backgroundColor: '#141414' }}>
       <PageDefault>
         <BannerMain
           videoTitle={dadosIniciais.categorias[0].videos[0].titulo}
           url={dadosIniciais.categorias[0].videos[0].url}
-          videoDescription={'O que que eu to fazendo aqui mds'}
+          videoDescription="O que que eu to fazendo aqui mds"
         />
         <Carousel
           ignoreFirstVideo
