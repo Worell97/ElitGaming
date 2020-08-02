@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/button';
+import Loading from '../../../components/Loading';
+import Logo from '../../../assets/Logo.png';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
   const categoria = {
@@ -10,34 +13,26 @@ function CadastroCategoria() {
     descricao: '',
     cor: '',
   };
+
+  const { handleChange, values, clearForm } = useForm(categoria);
+
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(categoria);
-
-  function setValue(key, value) {
-    setValues({
-      ...values,
-      [key]: value,
-    });
-  }
-
-  function handleChange(change) {
-    setValue(
-      change.target.getAttribute('name'),
-      change.target.value,
-    );
-  }
   function Load() {
-    const URL_TOP = 'http://localhost:8080/categorias/';
-    fetch(URL_TOP).then(async (Response) => {
-      const response = await Response.json();
-      setCategorias([
-        ...response,
-      ]);
-    });
+    setTimeout(() => {
+      const URL_TOP = window.location.hostname.includes('localhost')
+        ? 'http://localhost:8080/categorias'
+        : 'https://elitgaming.herokuapp.com/categorias';
+      fetch(URL_TOP).then(async (Response) => {
+        const response = await Response.json();
+        setCategorias([
+          ...response,
+        ]);
+      });
+    }, 10 * 1000);
   }
   useEffect(Load, []);
   return (
-    <PageDefault>
+    <PageDefault descricao="New Video">
       <h1>
         Cadastro de categorias:
         {values.nome}
@@ -50,7 +45,7 @@ function CadastroCategoria() {
             ...categorias,
             values,
           ]);
-          setValues(categoria);
+          clearForm();
         }}
       >
         <FormField
@@ -80,9 +75,9 @@ function CadastroCategoria() {
       </form>
       {categorias.length === 0
       && (
-      <div>
-        Loading...
-      </div>
+      <Loading duration="0.8s" delay="0.2s">
+        <img className="Logo" src={Logo} alt="Elit Gaming edition" />
+      </Loading>
       )}
       <ul>
         {categorias.map((item) => (
